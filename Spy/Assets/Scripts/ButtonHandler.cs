@@ -4,7 +4,7 @@ using UnityEngine;
 public class ButtonHandler : MonoBehaviour
 {
     private bool[] previousButtonStates = new bool[5]; // Tracks previous states
-    public string portName = "COM3"; // Change this to your Arduino's port name
+    public string portName = "COM4"; // Change this to your Arduino's port name
     public int baudRate = 9600; // Change this to your Arduino's baud rate
     private SerialPort serialPort;
 
@@ -60,16 +60,16 @@ public class ButtonHandler : MonoBehaviour
                     objectSpawner.SpawnTree();
                     break;
                 case 3:
-                    Debug.Log("Button 4 pressed");
+                    objectSpawner.SpawnKoe();
                     break;
                 case 4:
-                    Debug.Log("Button 5 pressed");
+                    objectSpawner.SpawnMolen();
                     break;
             }
         }
 
         // holding it causes it to grow
-        if (isPressed && i < 3)
+        if (isPressed && i < 5)
         {
             switch (i)
             {
@@ -82,11 +82,17 @@ public class ButtonHandler : MonoBehaviour
                 case 2:
                     objectSpawner.SpawnTree();
                     break;
+                case 3:
+                    objectSpawner.SpawnKoe();
+                    break;
+                case 4:
+                    objectSpawner.SpawnMolen();
+                    break;
             }
         }
 
         // if released
-        if (i < 3 && !isPressed && wasPressed)
+        if (i < 5 && !isPressed && wasPressed)
         {
             objectSpawner.ResetState();
         }

@@ -8,6 +8,8 @@ public class ObjectSpawner : MonoBehaviour
     public GameObject Cloud; 
     public GameObject Flower; 
     public GameObject Tree;
+    public GameObject Molen;
+    public GameObject Koe;
 
     [Header("Layers")]
     public string skyLayerName = "Sky"; // Ensure this layer exists
@@ -36,6 +38,16 @@ public class ObjectSpawner : MonoBehaviour
     private Camera mainCamera;
     private float scaleTimer = 0f; // Timer to track how long the key is held
     private GameObject currentInstance = null; // Reference to the currently spawned object 
+
+    [Header("Molen Spawn Range")]
+    public float molenMinY = 3f;
+    public float molenMaxY = 10f;
+    public float maxMolenScale = 3f; // Maximum scale for the flower
+
+    [Header("Koe Spawn Range")]
+    public float koeMinY = 3f;
+    public float koeMaxY = 10f;
+    public float maxKoeScale = 3f; // Maximum scale for the flower
 
     
 
@@ -116,6 +128,14 @@ public class ObjectSpawner : MonoBehaviour
         {
             spawnPosition.y = Random.Range(treeMinY, treeMaxY); 
         }
+        else if (prefab == Koe)
+        {
+            spawnPosition.y = Random.Range(koeMinY, koeMaxY); 
+        }
+        else if (prefab == Molen)
+        {
+            spawnPosition.y = Random.Range(molenMinY, molenMaxY); 
+        }
 
         // Create a new instance of the prefab at the calculated position with no rotation
         GameObject newInstance = Instantiate(prefab, spawnPosition, Quaternion.identity);
@@ -133,7 +153,7 @@ public class ObjectSpawner : MonoBehaviour
     {
         if (currentInstance == null && Cloud != null && skyLayer != -1)
         {
-            currentInstance = SpawnObject(Cloud, skyLayer);
+            currentInstance = SpawnObject(Cloud, groundLayer);
             currentInstance.transform.localScale = Vector3.one; // Reset scale to 1 when spawning a new object
             scaleTimer = 0f; // Reset the scale timer when spawning a new object
         }
@@ -155,13 +175,13 @@ public class ObjectSpawner : MonoBehaviour
         if (currentInstance == null && Flower != null && groundLayer != -1)
         {
             currentInstance = SpawnObject(Flower, groundLayer);
-            currentInstance.transform.localScale = Vector3.one; // Reset scale to 1 when spawning a new object
+            currentInstance.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f); // Reset scale to 1 when spawning a new object
             scaleTimer = 0f; // Reset the scale timer when spawning a new object
         }
         else if (currentInstance != null)
         {
             scaleTimer += Time.deltaTime; // Increment the timer
-            float newScale = 1f + scaleTimer; // Calculate the new scale
+            float newScale = 0.5f + scaleTimer; // Calculate the new scale
 
             if (newScale > maxFlowerScale) // Limit the scale to a maximum of 1.5
             {
@@ -189,6 +209,50 @@ public class ObjectSpawner : MonoBehaviour
             {
                 newScale = maxTreeScale; // Set to max scale if exceeded
                 Debug.Log("Max scale reached for Tree!"); // Debug message
+            }
+            currentInstance.transform.localScale = Vector3.one * newScale; // Apply the scale
+        }
+    }
+
+    public void SpawnKoe()
+    {
+        if (currentInstance == null && Koe != null && groundLayer != -1)
+        {
+            currentInstance = SpawnObject(Koe, groundLayer);
+            currentInstance.transform.localScale = Vector3.one; // Reset scale to 1 when spawning a new object
+            scaleTimer = 0f; // Reset the scale timer when spawning a new object
+        }
+        else if (currentInstance != null)
+        {
+            scaleTimer += Time.deltaTime; // Increment the timer
+            float newScale = 1f + scaleTimer; // Calculate the new scale
+
+            if (newScale > maxKoeScale) // Limit the scale to a maximum of 1.5
+            {
+                newScale = maxKoeScale; // Set to max scale if exceeded
+                Debug.Log("Max scale reached for Koe!"); // Debug message
+            }
+            currentInstance.transform.localScale = Vector3.one * newScale; // Apply the scale
+        }
+    }
+
+    public void SpawnMolen()
+    {
+        if (currentInstance == null && Molen != null && groundLayer != -1)
+        {
+            currentInstance = SpawnObject(Molen, groundLayer);
+            currentInstance.transform.localScale = Vector3.one; // Reset scale to 1 when spawning a new object
+            scaleTimer = 0f; // Reset the scale timer when spawning a new object
+        }
+        else if (currentInstance != null)
+        {
+            scaleTimer += Time.deltaTime; // Increment the timer
+            float newScale = 1f + scaleTimer; // Calculate the new scale
+
+            if (newScale > maxMolenScale) // Limit the scale to a maximum of 1.5
+            {
+                newScale = maxMolenScale; // Set to max scale if exceeded
+                Debug.Log("Max scale reached for Molen!"); // Debug message
             }
             currentInstance.transform.localScale = Vector3.one * newScale; // Apply the scale
         }

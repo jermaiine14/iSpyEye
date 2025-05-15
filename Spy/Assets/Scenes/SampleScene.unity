@@ -631,22 +631,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01ae6fcd4c1296549a14c759ebb0ffb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cloud: {fileID: 8075673052241707678, guid: 766a17c86d2e6d84699de92aff6347e8, type: 3}
+  Cloud: {fileID: 7322217413013130907, guid: f390698f3b483ac448a577e75f5412bc, type: 3}
   Flower: {fileID: 6532531968310688015, guid: 315c0470762b1924abe710192c33a693, type: 3}
-  Tree: {fileID: 3663563361111476743, guid: 764e4a62231f60941bbaa0ac9dbc645b, type: 3}
+  Tree: {fileID: 8458438852431249919, guid: d48e1dec978ca204aa7d8062603a3a69, type: 3}
+  Molen: {fileID: 3252187938265775687, guid: c1b2696092221bc4a91be961ccf57625, type: 3}
+  Koe: {fileID: 4569648540998476138, guid: 2c6cf27c951b19f47999aa4d2843e2a1, type: 3}
   skyLayerName: Sky
   groundLayerName: Ground
-  minSpawnX: -15
+  minSpawnX: -25
   spawnZ: 0
-  cloudMinY: 3
-  cloudMaxY: 10
-  maxCloudScale: 3
+  cloudMinY: -15
+  cloudMaxY: -8
+  maxCloudScale: 1.25
   flowerMinY: -15
   flowerMaxY: -8
-  maxFlowerScale: 3
-  treeMinY: -14
-  treeMaxY: -5
-  maxTreeScale: 2.5
+  maxFlowerScale: 0.9
+  treeMinY: 1
+  treeMaxY: -2
+  maxTreeScale: 1.25
+  molenMinY: -1
+  molenMaxY: -3
+  maxMolenScale: 1.5
+  koeMinY: -15
+  koeMaxY: -4
+  maxKoeScale: 2
 --- !u!114 &815239415
 MonoBehaviour:
   m_ObjectHideFlags: 0
