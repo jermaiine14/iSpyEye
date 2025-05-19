@@ -787,11 +787,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 519420028}
   parallaxEffect: 0.8
-  scrollSpeed: 2
+  scrollSpeed: 5
+  maxScrollSpeed: 5
   passingObjectPrefab: {fileID: 3663563361111476743, guid: 764e4a62231f60941bbaa0ac9dbc645b, type: 3}
-  passingSpeed: 3
+  passingSpeed: 5
   spawnInterval: 10
-  spawnOffset: {x: 40, y: 1, z: 1}
+  spawnOffset: {x: 60, y: 0.5, z: 1}
 --- !u!212 &1079488065
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class PassingObject : MonoBehaviour
     private Camera mainCam;
 
     [HideInInspector]
-    public ScrollingBackground2 background; // << reference to background
+    public ScrollingBackground2 background;
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class PassingObject : MonoBehaviour
         if (!hasPaused)
         {
             Vector3 viewportPos = mainCam.WorldToViewportPoint(transform.position);
-            if (viewportPos.x >= 0.45f && viewportPos.x <= 0.55f)
+            if (viewportPos.x >= 0.49f && viewportPos.x <= 0.50f)
             {
                 StartCoroutine(PauseMovement());
             }
@@ -42,17 +42,16 @@ public class PassingObject : MonoBehaviour
         hasPaused = true;
 
         if (background != null)
-        {
-            background.SetPause(true); // pause background
-        }
+            background.SetPause(true);
 
         yield return new WaitForSeconds(pauseDuration);
 
-        isPaused = false;
-
         if (background != null)
         {
-            background.SetPause(false); // resume background
+            background.SetPause(false);
+            background.ResumeScroll(); // resume scroll with acceleration
         }
+
+        isPaused = false;
     }
 }

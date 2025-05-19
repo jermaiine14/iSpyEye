@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ScrollingBackground2 : MonoBehaviour
@@ -9,6 +8,8 @@ public class ScrollingBackground2 : MonoBehaviour
     public GameObject cam;
     public float parallaxEffect;
     public float scrollSpeed = 2f;
+    public float maxScrollSpeed = 2f; // Target speed when accelerating
+    private float currentScrollSpeed;
 
     private bool isPaused = false;
 
@@ -25,6 +26,8 @@ public class ScrollingBackground2 : MonoBehaviour
         startPosition = transform.position.x;
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         length = sr ? sr.bounds.size.x : 10;
+
+        currentScrollSpeed = scrollSpeed;
     }
 
     void Update()
@@ -32,7 +35,7 @@ public class ScrollingBackground2 : MonoBehaviour
         if (isPaused) return;
 
         // Background scrolling
-        startPosition -= scrollSpeed * Time.deltaTime;
+        startPosition -= currentScrollSpeed * Time.deltaTime;
         float temp = cam.transform.position.x * (1 - parallaxEffect);
         float distance = cam.transform.position.x * parallaxEffect;
         transform.position = new Vector3(startPosition + distance, transform.position.y, transform.position.z);
@@ -56,16 +59,37 @@ public class ScrollingBackground2 : MonoBehaviour
             Vector3 spawnPos = cam.transform.position + spawnOffset;
             GameObject obj = Instantiate(passingObjectPrefab, spawnPos, Quaternion.identity);
 
-            // Pass a reference to this background to the passing object
             PassingObject po = obj.AddComponent<PassingObject>();
             po.speed = passingSpeed;
-            po.background = this; // << pass reference
+            po.background = this;
+
+            // Begin slowing down scroll when object spawns
+            StartCoroutine(SmoothScrollSpeed(0f, 10f)); // 1.5 seconds to slow down
         }
     }
 
-    // Called by the passing object to pause/resume
+    public void ResumeScroll()
+    {
+        StartCoroutine(SmoothScrollSpeed(maxScrollSpeed, 3f)); // 1.5 seconds to speed up
+    }
+
     public void SetPause(bool pause)
     {
         isPaused = pause;
+    }
+
+    IEnumerator SmoothScrollSpeed(float targetSpeed, float duration)
+    {
+        float initialSpeed = currentScrollSpeed;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            currentScrollSpeed = Mathf.Lerp(initialSpeed, targetSpeed, time / duration);
+            yield return null;
+        }
+
+        currentScrollSpeed = targetSpeed;
     }
 }
