@@ -51,19 +51,19 @@ public class ButtonHandler : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    objectSpawner.SpawnCloud(); // Initial spawn
-                    break;
-                case 1:
-                    objectSpawner.SpawnFlower();
-                    break;
-                case 2:
-                    objectSpawner.SpawnTree();
-                    break;
-                case 3:
                     objectSpawner.SpawnKoe();
                     break;
-                case 4:
+                case 1:
+                    objectSpawner.SpawnCloud(); // Initial spawn
+                    break;
+                case 2:
+                    objectSpawner.SpawnFlower();
+                    break;
+                case 3:
                     objectSpawner.SpawnMolen();
+                    break;
+                case 4:
+                    objectSpawner.SpawnTree();
                     break;
             }
         }
@@ -74,19 +74,19 @@ public class ButtonHandler : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    objectSpawner.SpawnCloud(); // Growth phase
-                    break;
-                case 1:
-                    objectSpawner.SpawnFlower();
-                    break;
-                case 2:
-                    objectSpawner.SpawnTree();
-                    break;
-                case 3:
                     objectSpawner.SpawnKoe();
                     break;
-                case 4:
+                case 1:
+                    objectSpawner.SpawnCloud(); // Initial spawn
+                    break;
+                case 2:
+                    objectSpawner.SpawnFlower();
+                    break;
+                case 3:
                     objectSpawner.SpawnMolen();
+                    break;
+                case 4:
+                    objectSpawner.SpawnTree();
                     break;
             }
         }

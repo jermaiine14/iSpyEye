@@ -309,7 +309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 519420028}
   parallaxEffect: 0.5
-  scrollSpeed: 2
+  scrollSpeed: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,6 +581,7 @@ GameObject:
   - component: {fileID: 815239413}
   - component: {fileID: 815239414}
   - component: {fileID: 815239415}
+  - component: {fileID: 815239416}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -654,6 +655,26 @@ MonoBehaviour:
   portName: COM3
   baudRate: 9600
   objectSpawner: {fileID: 815239414}
+--- !u!114 &815239416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815239411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ad7921eedaf4f44b30d68e609cebd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnEntries:
+  - prefab: {fileID: 8075673052241707678, guid: 766a17c86d2e6d84699de92aff6347e8, type: 3}
+    spawnPosition: {x: 35, y: 8, z: 0}
+  - prefab: {fileID: 8075673052241707678, guid: ba206bb3176b0c64f9a90117a8318e17, type: 3}
+    spawnPosition: {x: 60, y: 0, z: 0}
+  - prefab: {fileID: 8075673052241707678, guid: ddcdb8fdf252e8946ab1999e123634df, type: 3}
+    spawnPosition: {x: 30, y: 0, z: 0}
+  spawnInterval: 10
 --- !u!1 &962520504
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,7 +812,7 @@ MonoBehaviour:
   maxScrollSpeed: 5
   passingObjectPrefab: {fileID: 3663563361111476743, guid: 764e4a62231f60941bbaa0ac9dbc645b, type: 3}
   passingSpeed: 5
-  spawnInterval: 10
+  spawnInterval: 90
   spawnOffset: {x: 60, y: 0.5, z: 1}
 --- !u!212 &1079488065
 SpriteRenderer:

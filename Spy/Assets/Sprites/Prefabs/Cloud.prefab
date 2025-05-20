@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0faac2cd001853d4f88431afd9e70617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 2
-  acceleration: 4
+  scrollSpeed: 1
+  acceleration: 0
 --- !u!82 &-1491264906883281351
 AudioSource:
   m_ObjectHideFlags: 0
