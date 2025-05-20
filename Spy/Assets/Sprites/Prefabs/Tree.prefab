@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4994663405418606266}
   - component: {fileID: 7084355186930602702}
-  - component: {fileID: 4430702887742623205}
   - component: {fileID: 844967259031625661}
+  - component: {fileID: 643614664471956622}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -86,20 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &4430702887742623205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8458438852431249919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df5a5177510e90041a6c1fe6cf6016b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scrollSpeed: 3
-  acceleration: 0.25
 --- !u!82 &844967259031625661
 AudioSource:
   m_ObjectHideFlags: 0
@@ -196,3 +182,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &643614664471956622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8458438852431249919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dceb3bb487e389438a9b2bb27483b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 3
+  acceleration: 0.25

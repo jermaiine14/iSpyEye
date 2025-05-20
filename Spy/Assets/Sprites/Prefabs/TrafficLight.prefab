@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3913839260988642190}
   - component: {fileID: 3435326702811121462}
-  - component: {fileID: 8751050450258637310}
   - component: {fileID: -1491264906883281351}
+  - component: {fileID: 6817095981785013401}
   m_Layer: 0
   m_Name: TrafficLight
   m_TagString: Untagged
@@ -86,20 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &8751050450258637310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8075673052241707678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0faac2cd001853d4f88431afd9e70617, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scrollSpeed: 3
-  acceleration: 0.25
 --- !u!82 &-1491264906883281351
 AudioSource:
   m_ObjectHideFlags: 0
@@ -196,3 +182,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6817095981785013401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8075673052241707678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dceb3bb487e389438a9b2bb27483b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 3
+  acceleration: 0.25

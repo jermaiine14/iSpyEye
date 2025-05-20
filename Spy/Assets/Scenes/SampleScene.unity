@@ -654,6 +654,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portName: COM3
   baudRate: 9600
+  SB2: {fileID: 1079488064}
   objectSpawner: {fileID: 815239414}
 --- !u!114 &815239416
 MonoBehaviour:
@@ -810,9 +811,11 @@ MonoBehaviour:
   parallaxEffect: 0.8
   scrollSpeed: 5
   maxScrollSpeed: 5
+  isPaused: 0
+  ObjectSpawned: 0
   passingObjectPrefab: {fileID: 3663563361111476743, guid: 764e4a62231f60941bbaa0ac9dbc645b, type: 3}
   passingSpeed: 5
-  spawnInterval: 90
+  spawnInterval: 45
   spawnOffset: {x: 60, y: 0.5, z: 1}
 --- !u!212 &1079488065
 SpriteRenderer:

@@ -11,7 +11,8 @@ public class ScrollingBackground2 : MonoBehaviour
     public float maxScrollSpeed = 2f; // Target speed when accelerating
     private float currentScrollSpeed;
 
-    private bool isPaused = false;
+    public bool isPaused = false;
+    public bool ObjectSpawned = false;
 
     [Header("Passing Object")]
     public GameObject passingObjectPrefab;
@@ -50,18 +51,19 @@ public class ScrollingBackground2 : MonoBehaviour
             timer = 0f;
             SpawnPassingObject();
         }
+        
     }
 
     void SpawnPassingObject()
     {
         if (passingObjectPrefab != null)
         {
+            ObjectSpawned = true;
             Vector3 spawnPos = cam.transform.position + spawnOffset;
             GameObject obj = Instantiate(passingObjectPrefab, spawnPos, Quaternion.identity);
 
-            PassingObject po = obj.AddComponent<PassingObject>();
-            po.speed = passingSpeed;
-            po.background = this;
+            PassingObject po = obj.GetComponent<PassingObject>();
+po.background = this;
 
             // Begin slowing down scroll when object spawns
             StartCoroutine(SmoothScrollSpeed(0f, 10f)); // 1.5 seconds to slow down
@@ -70,6 +72,7 @@ public class ScrollingBackground2 : MonoBehaviour
 
     public void ResumeScroll()
     {
+        ObjectSpawned = false;
         StartCoroutine(SmoothScrollSpeed(maxScrollSpeed, 3f)); // 1.5 seconds to speed up
     }
 

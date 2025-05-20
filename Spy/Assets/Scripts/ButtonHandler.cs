@@ -7,6 +7,7 @@ public class ButtonHandler : MonoBehaviour
     public string portName = "COM4"; // Change this to your Arduino's port name
     public int baudRate = 9600; // Change this to your Arduino's baud rate
     private SerialPort serialPort;
+    public ScrollingBackground2 SB2;
 
     public ObjectSpawner objectSpawner; // Reference to the ObjectSpawner script
 
@@ -40,6 +41,7 @@ public class ButtonHandler : MonoBehaviour
 
    void HandleInput(string[] states)
 {
+    if (SB2.ObjectSpawned == false){
     for (int i = 0; i < numberOfButtons; i++)
     {
         bool isPressed = states[i] == "1";
@@ -108,4 +110,5 @@ public class ButtonHandler : MonoBehaviour
             serialPort.Close(); // Close the serial port when the application quits
         }
     }
+}
 }

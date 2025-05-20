@@ -15,16 +15,26 @@ public class PassingObject : MonoBehaviour
     public ScrollingBackground2 background;
 
     void Start()
-    {
-        mainCam = Camera.main;
-        Destroy(gameObject, lifetime);
-    }
+{
+    mainCam = Camera.main;
+    Debug.Log("Lifetime at Start: " + lifetime); // ✅ Check if it's correct
+    Destroy(gameObject, lifetime);
+}
 
-    void Update()
-    {
-        if (isPaused) return;
+    private float elapsedTime = 0f;
 
+void Update()
+{
+    if (!isPaused)
+    {
+        elapsedTime += Time.deltaTime;
         transform.Translate(Vector3.left * speed * Time.deltaTime);
+
+        if (elapsedTime >= lifetime)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         if (!hasPaused)
         {
@@ -35,6 +45,7 @@ public class PassingObject : MonoBehaviour
             }
         }
     }
+}
 
     IEnumerator PauseMovement()
     {
