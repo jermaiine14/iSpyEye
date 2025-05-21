@@ -5,8 +5,8 @@ using UnityEngine;
 public class ObjectSpawner : MonoBehaviour
 {
     [Header("Prefabs")]
-    public GameObject Cloud; 
-    public GameObject Flower; 
+    public GameObject Cloud;
+    public GameObject Flower;
     public GameObject Tree;
     public GameObject Molen;
     public GameObject Koe;
@@ -36,9 +36,7 @@ public class ObjectSpawner : MonoBehaviour
     public float treeMaxY = -5f;
     public float maxTreeScale = 2.5f; // Maximum scale for the tree
     private Camera mainCamera;
-    private float scaleTimer = 0f; // Timer to track how long the key is held
-    private GameObject currentInstance = null; // Reference to the currently spawned object 
-
+    // scaleTimer = 0f; // Timer to track how long the key is held
     [Header("Molen Spawn Range")]
     public float molenMinY = 3f;
     public float molenMaxY = 10f;
@@ -49,7 +47,9 @@ public class ObjectSpawner : MonoBehaviour
     public float koeMaxY = 10f;
     public float maxKoeScale = 3f; // Maximum scale for the flower
 
-    
+    private Dictionary<GameObject, float> scaleTimers = new Dictionary<GameObject, float>();
+    private Dictionary<int, List<GameObject>> activeInstances = new Dictionary<int, List<GameObject>>();    private GameObject currentInstance = null; // Reference to the currently spawned object 
+    private Dictionary<int, GameObject> growingInstance = new Dictionary<int, GameObject>();
 
     void Start()
     {
@@ -78,185 +78,122 @@ public class ObjectSpawner : MonoBehaviour
     /**
      * Comment Update() out when change the keyboard input to Arduino input
      */
-   void Update()
-    {   
-        minSpawnX = mainCamera.transform.position.x - 25f; // Update minSpawnX based on camera position
-        // Check if the '1' key is pressed or held
+    void Update()
+    {
+        minSpawnX = mainCamera.transform.position.x - 25f;
+
+        // Map number keys to button indices (0 to 4)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SpawnObjectByIndex(0);
+        }
         if (Input.GetKey(KeyCode.Alpha1))
         {
-            SpawnCloud(); // Call the SpawnCloud function
+            GrowObject(0);
         }
 
-        else if (Input.GetKeyUp(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            ResetState();
+            SpawnObjectByIndex(1);
         }
-
         if (Input.GetKey(KeyCode.Alpha2))
         {
-            SpawnFlower(); // Call the SpawnFlower function
+            GrowObject(1);
         }
-        else if (Input.GetKeyUp(KeyCode.Alpha2))
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-           ResetState();
+            SpawnObjectByIndex(2);
         }
         if (Input.GetKey(KeyCode.Alpha3))
         {
-            SpawnTree(); // Call the SpawnTree function
-        }
-        else if (Input.GetKeyUp(KeyCode.Alpha3))
-        {
-            ResetState();
-        }
-    }    
-    // Function to handle the actual spawning
-    GameObject SpawnObject(GameObject prefab, int targetLayer)
-    {
-        Vector3 spawnPosition = new Vector3(28f, 0, spawnZ); // Create position vector
-        // If getting the position failed, don't spawn
-        if (spawnPosition == Vector3.negativeInfinity) return null;
-        
-        if (prefab == Cloud)
-        {
-            spawnPosition.y = Random.Range(cloudMinY, cloudMaxY); // Get random Y within range
-        }    
-        else if (prefab == Flower)
-        {
-            spawnPosition.y = Random.Range(flowerMinY, flowerMaxY); // Get random Y within range
-        }
-        else if (prefab == Tree)
-        {
-            spawnPosition.y = Random.Range(treeMinY, treeMaxY); 
-        }
-        else if (prefab == Koe)
-        {
-            spawnPosition.y = Random.Range(koeMinY, koeMaxY); 
-        }
-        else if (prefab == Molen)
-        {
-            spawnPosition.y = Random.Range(molenMinY, molenMaxY); 
+            GrowObject(2);
         }
 
-        // Create a new instance of the prefab at the calculated position with no rotation
-        GameObject newInstance = Instantiate(prefab, spawnPosition, Quaternion.identity);
-
-        // --- Set Layer ---
-        // Assign the new object (and its children) to the target layer
-        SetLayerRecursively(newInstance, targetLayer);
-        SetSortingLayer(newInstance, targetLayer); // Set the sorting layer for the new object
-
-        Debug.Log($"Spawned {newInstance.name} on layer '{LayerMask.LayerToName(targetLayer)}'");
-        return newInstance; // Return the spawned object for further manipulation if needed
-    }
-
-    public void SpawnCloud()
-    {
-        if (currentInstance == null && Cloud != null && skyLayer != -1)
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            currentInstance = SpawnObject(Cloud, groundLayer);
-            currentInstance.transform.localScale = Vector3.one; // Reset scale to 1 when spawning a new object
-            scaleTimer = 0f; // Reset the scale timer when spawning a new object
+            SpawnObjectByIndex(3);
         }
-        else if (currentInstance != null)
+        if (Input.GetKey(KeyCode.Alpha4))
         {
-            scaleTimer += Time.deltaTime; // Increment the timer
-            float newScale = 1f + scaleTimer; // Calculate the new scale
-            if (newScale > maxCloudScale)
-            {
-                newScale = maxCloudScale; // Set to max scale if exceeded
-                Debug.Log("Max scale reached for Cloud!"); // Debug message
-            }
-            currentInstance.transform.localScale = Vector3.one * newScale; // Apply the scale
+            GrowObject(3);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            SpawnObjectByIndex(4);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha5))
+        {
+            GrowObject(4);
         }
     }
-
-    public void SpawnFlower()
+    public void SpawnObjectByIndex(int index)
     {
-        if (currentInstance == null && Flower != null && groundLayer != -1)
-        {
-            currentInstance = SpawnObject(Flower, groundLayer);
-            currentInstance.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f); // Reset scale to 1 when spawning a new object
-            scaleTimer = 0f; // Reset the scale timer when spawning a new object
-        }
-        else if (currentInstance != null)
-        {
-            scaleTimer += Time.deltaTime; // Increment the timer
-            float newScale = 0.5f + scaleTimer; // Calculate the new scale
+        GameObject prefab = null;
+        float minY = 0f, maxY = 0f;
 
-            if (newScale > maxFlowerScale) // Limit the scale to a maximum of 1.5
-            {
-                newScale = maxFlowerScale; // Set to max scale if exceeded
-                Debug.Log("Max scale reached for Flower!"); // Debug message
-            }
-            currentInstance.transform.localScale = Vector3.one * newScale; // Apply the scale
+        switch (index)
+        {
+            case 0: prefab = Koe; minY = koeMinY; maxY = koeMaxY; break;
+            case 1: prefab = Cloud; minY = cloudMinY; maxY = cloudMaxY; break;
+            case 2: prefab = Flower; minY = flowerMinY; maxY = flowerMaxY; break;
+            case 3: prefab = Molen; minY = molenMinY; maxY = molenMaxY; break;
+            case 4: prefab = Tree; minY = treeMinY; maxY = treeMaxY; break;
         }
+
+        Vector3 spawnPos = new Vector3(28f, Random.Range(minY, maxY), spawnZ);
+        GameObject instance = Instantiate(prefab, spawnPos, Quaternion.identity);
+
+        SetLayerRecursively(instance, groundLayer);
+        SetSortingLayer(instance, groundLayer);
+
+        // Add to the list for this index
+        if (!activeInstances.ContainsKey(index))
+            activeInstances[index] = new List<GameObject>();
+        activeInstances[index].Add(instance);
+
+        // Optionally, you can track scaleTimers for each instance if needed
+        // For now, just set initial scale
+        float scaleBase = 1f;
+        if (index == 2) scaleBase = 0.5f; // Flower starts at 0.5
+        instance.transform.localScale = Vector3.one * scaleBase;
+        scaleTimers[instance] = 0f;
+
+        // Set this as the currently growing object for this type
+        growingInstance[index] = instance;
     }
 
-    public void SpawnTree()
+    public void GrowObject(int index)
     {
-        if (currentInstance == null && Tree != null && groundLayer != -1)
-        {
-            currentInstance = SpawnObject(Tree, groundLayer);
-            currentInstance.transform.localScale = Vector3.one; // Reset scale to 1 when spawning a new object
-            scaleTimer = 0f; // Reset the scale timer when spawning a new object
-        }
-        else if (currentInstance != null)
-        {
-            scaleTimer += Time.deltaTime; // Increment the timer
-            float newScale = 1f + scaleTimer; // Calculate the new scale
+        if (!growingInstance.ContainsKey(index)) return;
 
-            if (newScale > maxTreeScale) // Limit the scale to a maximum of 1.5
-            {
-                newScale = maxTreeScale; // Set to max scale if exceeded
-                Debug.Log("Max scale reached for Tree!"); // Debug message
-            }
-            currentInstance.transform.localScale = Vector3.one * newScale; // Apply the scale
+        GameObject obj = growingInstance[index];
+        if (obj == null)
+        {
+            growingInstance.Remove(index);
+            return;
         }
+
+        // Update timer
+        scaleTimers[obj] += Time.deltaTime;
+
+        float scaleBase = 1f;
+        float maxScale = 3f;
+
+        switch (index)
+        {
+            case 0: maxScale = maxKoeScale; break;
+            case 1: maxScale = maxCloudScale; break;
+            case 2: scaleBase = 0.5f; maxScale = maxFlowerScale; break;
+            case 3: maxScale = maxMolenScale; break;
+            case 4: maxScale = maxTreeScale; break;
+        }
+
+        float newScale = Mathf.Min(scaleBase + scaleTimers[obj], maxScale);
+        obj.transform.localScale = Vector3.one * newScale;
     }
-
-    public void SpawnKoe()
-    {
-        if (currentInstance == null && Koe != null && groundLayer != -1)
-        {
-            currentInstance = SpawnObject(Koe, groundLayer);
-            currentInstance.transform.localScale = Vector3.one; // Reset scale to 1 when spawning a new object
-            scaleTimer = 0f; // Reset the scale timer when spawning a new object
-        }
-        else if (currentInstance != null)
-        {
-            scaleTimer += Time.deltaTime; // Increment the timer
-            float newScale = 1f + scaleTimer; // Calculate the new scale
-
-            if (newScale > maxKoeScale) // Limit the scale to a maximum of 1.5
-            {
-                newScale = maxKoeScale; // Set to max scale if exceeded
-                Debug.Log("Max scale reached for Koe!"); // Debug message
-            }
-            currentInstance.transform.localScale = Vector3.one * newScale; // Apply the scale
-        }
-    }
-
-    public void SpawnMolen()
-    {
-        if (currentInstance == null && Molen != null && groundLayer != -1)
-        {
-            currentInstance = SpawnObject(Molen, groundLayer);
-            currentInstance.transform.localScale = Vector3.one; // Reset scale to 1 when spawning a new object
-            scaleTimer = 0f; // Reset the scale timer when spawning a new object
-        }
-        else if (currentInstance != null)
-        {
-            scaleTimer += Time.deltaTime; // Increment the timer
-            float newScale = 1f + scaleTimer; // Calculate the new scale
-
-            if (newScale > maxMolenScale) // Limit the scale to a maximum of 1.5
-            {
-                newScale = maxMolenScale; // Set to max scale if exceeded
-                Debug.Log("Max scale reached for Molen!"); // Debug message
-            }
-            currentInstance.transform.localScale = Vector3.one * newScale; // Apply the scale
-        }
-    }
+    
     // Helper function to set the layer for the spawned object and all its children
     void SetLayerRecursively(GameObject obj, int newLayer)
     {
@@ -296,9 +233,5 @@ public class ObjectSpawner : MonoBehaviour
             }
         }
     }
-    public void ResetState()
-    {// Reset the state of the spawner
-        scaleTimer = 0f; // Reset the scale timer
-        currentInstance = null; // Clear the reference to the current instance
-    }
+
 }

@@ -24,7 +24,7 @@ public class ButtonHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(serialPort.IsOpen)
+        if (serialPort.IsOpen)
         {
             try
             {
@@ -39,6 +39,7 @@ public class ButtonHandler : MonoBehaviour
         }
     }
 
+    /**
    void HandleInput(string[] states)
 {
     if (SB2.ObjectSpawned == false){
@@ -101,7 +102,27 @@ public class ButtonHandler : MonoBehaviour
 
         previousButtonStates[i] = isPressed; // save state
     }
-}
+}**/
+    void HandleInput(string[] states)
+    {
+        for (int i = 0; i < numberOfButtons; i++)
+        {
+            bool isPressed = states[i] == "1";
+            bool wasPressed = previousButtonStates[i];
+
+            if (isPressed && !wasPressed) // Just pressed
+            {
+                objectSpawner.SpawnObjectByIndex(i);;
+            }
+
+            if (isPressed)
+            {
+                objectSpawner.GrowObject(i); // Call the grow method if the button is pressed
+            }
+
+            previousButtonStates[i] = isPressed;
+        }
+    }
 
     void OnApplicationQuit()
     {
@@ -110,5 +131,4 @@ public class ButtonHandler : MonoBehaviour
             serialPort.Close(); // Close the serial port when the application quits
         }
     }
-}
 }
