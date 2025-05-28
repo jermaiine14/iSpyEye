@@ -47,6 +47,7 @@ public class ObjectSpawner : MonoBehaviour
     public float koeMaxY = 10f;
     public float maxKoeScale = 3f; // Maximum scale for the flower
 
+
     private Dictionary<GameObject, float> scaleTimers = new Dictionary<GameObject, float>();
     private Dictionary<int, List<GameObject>> activeInstances = new Dictionary<int, List<GameObject>>();    private GameObject currentInstance = null; // Reference to the currently spawned object 
     private Dictionary<int, GameObject> growingInstance = new Dictionary<int, GameObject>();

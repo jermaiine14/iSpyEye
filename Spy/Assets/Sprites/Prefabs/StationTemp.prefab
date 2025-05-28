@@ -195,6 +195,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  lifetime: 40
+  lifetime: 50
   pauseDuration: 5
   background: {fileID: 0}
