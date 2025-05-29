@@ -124,7 +124,7 @@ public class ObjectSpawner : MonoBehaviour
         {
             SpawnObjectByIndex(4);
         }
-        if (Input.GetKeyUp(KeyCode.Alpha5))
+        if (Input.GetKey(KeyCode.Alpha5))
         {
             GrowObject(4);
         }
