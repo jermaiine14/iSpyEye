@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -767405993
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 5122572b934378649a5c9ea4b89ed7d2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d5b9c0b678952d14a8e6d8bf92349c20, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0faac2cd001853d4f88431afd9e70617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 3
+  scrollSpeed: 2.5
   acceleration: 0.5
 --- !u!82 &-1491264906883281351
 AudioSource:
