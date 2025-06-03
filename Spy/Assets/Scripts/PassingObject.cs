@@ -15,42 +15,48 @@ public class PassingObject : MonoBehaviour
     public ScrollingBackground2 background;
 
     void Start()
-{
-    mainCam = Camera.main;
-    Debug.Log("Lifetime at Start: " + lifetime); // ✅ Check if it's correct
-    Destroy(gameObject, lifetime);
-}
+    {
+        mainCam = Camera.main;
+        Debug.Log("Lifetime at Start: " + lifetime); // ✅ Check if it's correct
+        Destroy(gameObject, lifetime);
+    }
 
     private float elapsedTime = 0f;
 
-void Update()
-{
-    if (!isPaused)
+    void Update()
     {
-        elapsedTime += Time.deltaTime;
-        transform.Translate(Vector3.left * speed * Time.deltaTime);
-
-        if (elapsedTime >= lifetime)
+        if (!isPaused)
         {
-            Destroy(gameObject);
-            return;
-        }
+            elapsedTime += Time.deltaTime;
+            transform.Translate(Vector3.left * speed * Time.deltaTime);
 
-        if (!hasPaused)
-        {
-            Vector3 viewportPos = mainCam.WorldToViewportPoint(transform.position);
-            if (viewportPos.x >= 0.49f && viewportPos.x <= 0.50f)
+            if (elapsedTime >= lifetime)
             {
-                StartCoroutine(PauseMovement());
+                Destroy(gameObject);
+                return;
+            }
+
+            if (!hasPaused)
+            {
+                Vector3 viewportPos = mainCam.WorldToViewportPoint(transform.position);
+                if (viewportPos.x >= 0.49f && viewportPos.x <= 0.50f)
+                {
+                    StartCoroutine(PauseMovement());
+                }
             }
         }
     }
-}
 
     IEnumerator PauseMovement()
     {
         isPaused = true;
         hasPaused = true;
+
+        // ——— NEW: Snap all collected stickers onto the board immediately ———
+        if (StickerCollector.Instance != null)
+        {
+            StickerCollector.Instance.SnapAllToBoard();
+        }
 
         if (background != null)
             background.SetPause(true);
