@@ -30,13 +30,9 @@ public class FlowerMovement : MonoBehaviour
 
         if (transform.position.x < -40f)
         {
-            // Instead of destroying, hand off to the collector:
             if (StickerCollector.Instance != null)
-            {
                 StickerCollector.Instance.AddSticker(this.gameObject);
-            }
-            // Remove this movement component so it stops drifting.
-            Destroy(this);
+            Destroy(this);  // verwijder alléén dit component, zodat het GameObject blijft bestaan
         }
     }
 }

@@ -9,6 +9,13 @@ using UnityEngine;
 
 public class StickerCollector : MonoBehaviour
 {
+    [Header("Handmatige Bord-aanpassing")]
+    [Tooltip("Met deze factor wordt de breedte van het bord gedeeld. 1 = volle breedte, 2 = halve breedte, etc.")]
+    public float widthFactor = 1f;
+
+    [Tooltip("Met deze factor wordt de hoogte van het bord gedeeld. 1 = volle hoogte, 2 = halve hoogte, etc.")]
+    public float heightFactor = 1f;
+
     // ——— SINGLETON SETUP ———
     public static StickerCollector Instance { get; private set; }
 
@@ -43,8 +50,8 @@ public class StickerCollector : MonoBehaviour
     /// The world-space width and height of the board (in Unity units).
     /// These must match your board’s actual size (e.g. a 15×20 sprite scaled 1,1,1).
     /// </summary>
-    private float boardWidth = 15f;
-    private float boardHeight = 20f;
+    //private float boardWidth = 15f;
+    //private float boardHeight = 20f;
 
     /// <summary>
     /// Minimum cell size (stickers will never shrink below 2×2 units).
@@ -93,6 +100,28 @@ public class StickerCollector : MonoBehaviour
             return;
         }
 
+        SpriteRenderer boardSR = stationBoardTransform.GetComponent<SpriteRenderer>();
+        if (boardSR == null)
+        {
+            // zoek bij de kinderen:
+            boardSR = stationBoardTransform.GetComponentInChildren<SpriteRenderer>();
+        }
+
+        if (boardSR == null)
+        {
+            Debug.LogError("StickerCollector: stationBoardTransform of één van zijn kinderen heeft geen SpriteRenderer!");
+            return;
+        }
+        Vector2 boardWorldSize = boardSR.bounds.size; // b.v. (38.4, 51.2)
+        Debug.Log($"[Debug] raw boardWorldSize = {boardWorldSize.x:F2} × {boardWorldSize.y:F2}");
+
+        // Pas hier de handmatige factor toe:
+        float rawBoardWidth = boardWorldSize.x;    // b.v. 38.4
+        float rawBoardHeight = boardWorldSize.y;    // b.v. 51.2
+        float boardWidth = rawBoardWidth / widthFactor;
+        float boardHeight = rawBoardHeight / heightFactor;
+        Debug.Log($"[Debug] widthFactor={widthFactor:F2}, heightFactor={heightFactor:F2} → boardWidth={boardWidth:F2}, boardHeight={boardHeight:F2}");
+
         int count = collectedStickers.Count;
         if (count == 0)
         {
@@ -140,6 +169,8 @@ public class StickerCollector : MonoBehaviour
             cols = maxCols;
             rows = maxRows;
         }
+        Debug.Log($"[Debug] count={count}, maxCols={maxCols}, maxRows={maxRows}, cols={cols}, rows={rows}, cellWidth={cellWidth:F2}");
+
 
         // 2) Re-parent and place each sticker in spawn‐order:
         for (int i = 0; i < count; i++)
@@ -162,10 +193,23 @@ public class StickerCollector : MonoBehaviour
             // (causing overlap), which is fine per our “overlap if > capacity” rule.
 
             s.transform.localPosition = new Vector3(xOffset, yOffset, 0f);
+            Debug.Log($"[Debug] Sticker '{s.name}' localPos = ({xOffset:F2}, {yOffset:F2})");
+
 
             // Scale each sticker uniformly so its sprite fits inside an (cellWidth × cellHeight) square.
             // We assume the sticker’s original sprite is roughly square. If not, you can adjust individually.
-            s.transform.localScale = Vector3.one * cellWidth;
+            SpriteRenderer sr = s.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                float spriteWorldWidth = sr.sprite.bounds.size.x;
+                float scaleFactor = cellWidth / spriteWorldWidth;
+                Debug.Log($"[Debug] Sticker '{s.name}' spriteWorldWidth={spriteWorldWidth:F2}, scaleFactor={scaleFactor:F2}, resultingWidth={spriteWorldWidth * scaleFactor:F2}");
+                s.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1f);
+            }
+            else
+            {
+                s.transform.localScale = Vector3.one * (cellWidth / 5f);
+            }
         }
 
         // 3) Clear the list so the next station collects a fresh batch:
