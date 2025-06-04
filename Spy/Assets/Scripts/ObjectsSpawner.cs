@@ -49,7 +49,7 @@ public class ObjectSpawner : MonoBehaviour
 
 
     private Dictionary<GameObject, float> scaleTimers = new Dictionary<GameObject, float>();
-    private Dictionary<int, List<GameObject>> activeInstances = new Dictionary<int, List<GameObject>>();    private GameObject currentInstance = null; // Reference to the currently spawned object 
+    private Dictionary<int, List<GameObject>> activeInstances = new Dictionary<int, List<GameObject>>();    //private GameObject currentInstance = null; // Reference to the currently spawned object 
     private Dictionary<int, GameObject> growingInstance = new Dictionary<int, GameObject>();
 
     void Start()
