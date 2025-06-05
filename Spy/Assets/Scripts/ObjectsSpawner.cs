@@ -51,6 +51,7 @@ public class ObjectSpawner : MonoBehaviour
     private Dictionary<GameObject, float> scaleTimers = new Dictionary<GameObject, float>();
     private Dictionary<int, List<GameObject>> activeInstances = new Dictionary<int, List<GameObject>>();    //private GameObject currentInstance = null; // Reference to the currently spawned object 
     private Dictionary<int, GameObject> growingInstance = new Dictionary<int, GameObject>();
+    private Dictionary<int, int> spawnCounts = new Dictionary<int, int>();
 
     void Start()
     {
@@ -129,10 +130,16 @@ public class ObjectSpawner : MonoBehaviour
             GrowObject(4);
         }
     }
+
+    public Dictionary<int, int> GetSpawnCounts()
+    {
+        return new Dictionary<int, int>(spawnCounts); // Return a copy
+    }
     public void SpawnObjectByIndex(int index)
     {
         GameObject prefab = null;
         float minY = 0f, maxY = 0f;
+        string objectName = "";
 
         switch (index)
         {
@@ -145,6 +152,11 @@ public class ObjectSpawner : MonoBehaviour
 
         Vector3 spawnPos = new Vector3(28f, Random.Range(minY, maxY), spawnZ);
         GameObject instance = Instantiate(prefab, spawnPos, Quaternion.identity);
+        if (!spawnCounts.ContainsKey(index))
+            spawnCounts[index] = 0;
+        spawnCounts[index]++;
+        Debug.Log($"Spawned type {index}, total so far: {spawnCounts[index]}");
+
 
         SetLayerRecursively(instance, groundLayer);
         SetSortingLayer(instance, groundLayer);
@@ -163,6 +175,7 @@ public class ObjectSpawner : MonoBehaviour
 
         // Set this as the currently growing object for this type
         growingInstance[index] = instance;
+
     }
 
     public void GrowObject(int index)
@@ -194,7 +207,7 @@ public class ObjectSpawner : MonoBehaviour
         float newScale = Mathf.Min(scaleBase + scaleTimers[obj], maxScale);
         obj.transform.localScale = Vector3.one * newScale;
     }
-    
+
     // Helper function to set the layer for the spawned object and all its children
     void SetLayerRecursively(GameObject obj, int newLayer)
     {
@@ -234,5 +247,11 @@ public class ObjectSpawner : MonoBehaviour
             }
         }
     }
+
+    public void ResetSpawnCounts()
+    {
+        spawnCounts.Clear();
+    }
+
 
 }

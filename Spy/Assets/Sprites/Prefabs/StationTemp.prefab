@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &94627793503072010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5195149925420680307}
+  m_Layer: 0
+  m_Name: StickerHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5195149925420680307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94627793503072010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.22, y: 0.78, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.35, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1790459868300205569}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &556544923029039239
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,6 +445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1790459868300205569}
   - component: {fileID: 7725744253282575788}
+  - component: {fileID: 3763906267315273144}
   m_Layer: 0
   m_Name: Scoreboard
   m_TagString: Untagged
@@ -433,7 +465,8 @@ Transform:
   m_LocalPosition: {x: 3.92, y: -1.12, z: 0}
   m_LocalScale: {x: 0.65331876, y: 0.65331876, z: 2.613275}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5195149925420680307}
   m_Father: {fileID: 3012816394584144689}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7725744253282575788
@@ -488,3 +521,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3763906267315273144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8709998906157187356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32bd7656a0f9468191ac86285d81b2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CloudSticker: {fileID: 8075673052241707678, guid: 613f07da3efa74130b2c6d7d0093738f, type: 3}
+  TreeSticker: {fileID: 8458438852431249919, guid: b9dee79bf0d6047c18ba8c9796a3aa02, type: 3}
+  MolenSticker: {fileID: 3252187938265775687, guid: 2002dbb6612db4665afdd8a1f7a029ad, type: 3}
+  KoeSticker: {fileID: 4569648540998476138, guid: 26706b81d810a4f5a9dd4e787a4ed1bf, type: 3}
+  FlowerSticker: {fileID: 6532531968310688015, guid: ec4233230edc3418598942595ca60ef3, type: 3}
+  scoreboardParent: {fileID: 5195149925420680307}

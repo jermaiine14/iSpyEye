@@ -5,7 +5,7 @@ public class PassingObject : MonoBehaviour
 {
     public float speed = 5f;
     public float lifetime = 15f;
-    public float pauseDuration = 5f;
+    public float pauseDuration = 1f;
 
     private bool hasPaused = false;
     private bool isPaused = false;
@@ -17,7 +17,7 @@ public class PassingObject : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main;
-        Debug.Log("Lifetime at Start: " + lifetime); // ✅ Check if it's correct
+        Debug.Log("Lifetime at Start: " + lifetime); // Check if it's correct
         Destroy(gameObject, lifetime);
     }
 
@@ -45,6 +45,8 @@ public class PassingObject : MonoBehaviour
                 }
             }
         }
+
+
     }
 
     IEnumerator PauseMovement()
@@ -52,10 +54,10 @@ public class PassingObject : MonoBehaviour
         isPaused = true;
         hasPaused = true;
 
-        // ——— NEW: Snap all collected stickers onto the board immediately ———
-        if (StickerCollector.Instance != null)
+        Sticker sticker = GetComponentInChildren<Sticker>();
+        if (sticker != null)
         {
-            StickerCollector.Instance.SnapAllToBoard();
+            sticker.SnapAllToBoard();
         }
 
         if (background != null)
@@ -69,6 +71,13 @@ public class PassingObject : MonoBehaviour
             background.ResumeScroll(); // resume scroll with acceleration
         }
 
+        if (sticker != null)
+        {
+            sticker.ResetCounts();
+        }
+
         isPaused = false;
+
     }
+    
 }
