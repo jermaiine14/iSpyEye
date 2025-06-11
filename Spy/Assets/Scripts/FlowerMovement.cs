@@ -32,7 +32,8 @@ public class FlowerMovement : MonoBehaviour
         {
             if (StickerCollector.Instance != null)
                 StickerCollector.Instance.AddSticker(this.gameObject);
-            Destroy(this);  // verwijder alléén dit component, zodat het GameObject blijft bestaan
+            // Destroy(this);  // verwijder alléén dit component, zodat het GameObject blijft bestaan
+            Destroy(gameObject);
         }
     }
 }
