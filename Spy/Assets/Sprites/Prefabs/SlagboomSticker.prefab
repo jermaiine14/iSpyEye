@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7656045756333282662}
   - component: {fileID: 5866864972837110648}
-  - component: {fileID: 3195768292606810967}
+  - component: {fileID: 1564554098371116457}
   m_Layer: 0
-  m_Name: FlowerSticker
+  m_Name: SlagboomSticker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: -279413149
   m_SortingLayer: 3
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 1f563145f5cd44a439b8e666957717c1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 34e40fb708f7f174c91119fd4ac53ddf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!95 &3195768292606810967
+--- !u!95 &1564554098371116457
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -95,7 +95,7 @@ Animator:
   m_GameObject: {fileID: 6532531968310688015}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 884e0b19394beb4499b30e91badf37a0, type: 2}
+  m_Controller: {fileID: 9100000, guid: cdaee97fd6a662b46ba4fe72e007bfe0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

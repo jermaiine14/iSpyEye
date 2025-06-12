@@ -533,7 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32bd7656a0f9468191ac86285d81b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CloudSticker: {fileID: 8075673052241707678, guid: 613f07da3efa74130b2c6d7d0093738f, type: 3}
+  SlagboomSticker: {fileID: 6532531968310688015, guid: 9a0547d3c3c4b034abb9cf863c9c2396, type: 3}
   TreeSticker: {fileID: 8458438852431249919, guid: b9dee79bf0d6047c18ba8c9796a3aa02, type: 3}
   MolenSticker: {fileID: 3252187938265775687, guid: 2002dbb6612db4665afdd8a1f7a029ad, type: 3}
   KoeSticker: {fileID: 4569648540998476138, guid: 26706b81d810a4f5a9dd4e787a4ed1bf, type: 3}

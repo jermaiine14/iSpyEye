@@ -6,7 +6,7 @@ public class Sticker : MonoBehaviour
 {
     public static Sticker Instance;
 
-    public GameObject CloudSticker, TreeSticker, MolenSticker, KoeSticker, FlowerSticker;
+    public GameObject SlagboomSticker, TreeSticker, MolenSticker, KoeSticker, FlowerSticker;
     public Transform scoreboardParent;
 
     private List<GameObject> spawnedStickers = new List<GameObject>();
@@ -64,7 +64,7 @@ public class Sticker : MonoBehaviour
         return index switch
         {
             0 => KoeSticker,
-            1 => CloudSticker,
+            1 => SlagboomSticker,
             2 => FlowerSticker,
             3 => MolenSticker,
             4 => TreeSticker,
